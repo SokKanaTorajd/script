@@ -1,0 +1,76 @@
+#zomatosele.py 
+from selenium import webdriver
+import pandas as pd
+
+driver = webdriver.Chrome(executable_path=r'C:/Program Files/Google/Chrome/Application/chromedriver.exe')
+
+driver.get('https://www.zomato.com/jakarta/sedjuk-bakmi-kopi-scbd/reviews')
+print('Accessing Webpage OK \n')
+
+reviews = []
+
+review_list = driver.find_elements_by_tag_name('span')
+# continue_link = driver.find_element_by_link_text('read more')
+# review_list = driver.find_elements_by_class_name('sc-1hez2tp-0 sc-eAudoH fAakhY')
+# review_list = driver.find_element_by_css_selector('span.sc-hgzKov.dVIlqh')
+
+for r in review_list:
+    review_text = r.text
+    reviews.append(review_text)
+    print(review_text)
+    
+
+
+
+
+
+#zomatosele2.py 
+from selenium import webdriver
+import pandas as pd
+import time
+
+url = ('https://www.zomato.com/jakarta/sedjuk-bakmi-kopi-scbd/reviews')
+
+driver = webdriver.Chrome(executable_path=r'C:/Program Files/Google/Chrome/Application/chromedriver.exe')
+
+driver.get(url)
+print('Accessing Webpage OK \n')
+
+driver.find_element_by_xpath('//*[@id="root"]/div[2]/main/div/section[4]/div/div/section[2]/div[2]/p[3]/span[2]').click()
+#wait for reviews to load
+time.sleep(5)
+
+reviews = driver.find_elements_by_xpath('//*[@id="root"]/div[2]/main/div/section[4]/div/div/section[2]/div[2]/p[3]')
+num_page_items = min(len(reviews), 5)
+
+#loop
+for i in range(num_page_items):
+    review = reviews[i].find_element_by_xpath('//*[@id="root"]/div[2]/main/div/section[4]/div/div/section[2]/div[2]/p[3]/span[1]').text.replace("\n", "")
+    
+driver.close()
+
+
+
+#zomatosele3.py
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+chrome_options = Options()
+chrome_options.add_argument("--incognito")
+chrome_options.add_argument("--headless")
+
+result = []
+stack = ['https://www.zomato.com/jakarta/sedjuk-bakmi-kopi-scbd/reviews']
+
+driver = webdriver.Chrome(options=chrome_options)
+while len(stack) > 0 and len (result) < 5:
+    driver.get(stack.pop())
+    for r in review_list:
+        review_text = r.text
+        reviews.append(review_text)
+        elements = driver.find_elements_by_tag_name("span")
+        for e in elements:
+            if len(text) > 2:
+                stack.append(elements)
+print(result)
+driver.close()
