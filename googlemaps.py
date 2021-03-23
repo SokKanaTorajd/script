@@ -15,7 +15,7 @@ class WebDriver:
         self.PATH = "chromedriver.exe"
         self.options = Options()
         self.options.add_argument("--headless")
-        self.driver = webdriver.Chrom(self.PATH, options=self.options)
+        self.driver = webdriver.Chrome(self.PATH, options=self.options)
         
         self.location_data["rating"] = "NA"
         self.location_data["reviews_count"] = "NA"
@@ -96,7 +96,7 @@ class WebDriver:
             review_stars_list = [a for a in review_stars_final]
             
             for (a,b) in zip(review_text_list, review_stars_list):
-                self.location_data["Reviews"].append({"review":a, "rating":d})
+                self.location_data["Reviews"].append({"review":a, "rating":b})
                 
         except Exception as c:
             pass
@@ -112,8 +112,8 @@ class WebDriver:
         time.sleep(10) #waiting for the page to load.
         
         self.get_location_data()
-        if(self.click_all_reviews_button()==False):
-           return(self.location_data)
+        # if(self.click_all_reviews_button()==False):
+        #    return(self.location_data)
        
         time.sleep(5)
         
